@@ -1,0 +1,45 @@
+   |--[ | ]--| oo o
+Q     1 2 3
+
+QUARTILES
+Q1: 25%   Q2: MEDIANA   Q3: 75%
+
+la linea del medio es la mediana que es el valor del medio si ordenamos los datos de menor a mayor o en caso de tener una cantidad de datos pares es el promedio entre los 2 valores del medio.
+
+el rango intercuartil (RIC) es la distancia entre Q3 y Q1
+RIC = Q3-Q1 
+
+Los bigotes, las líneas que se extienden desde la caja, se extienden hasta los valores máximo y mínimo de la serie o hasta 1,5 veces el RIC.
+los valores fuera de los bigotes, es decir mayores o menores son considerados atipicos 
+
+RIC es el tamaño de la caja, mayores a 3*RIC o menores a 3*RIC son atipicos extremos. 
+si estan 1,5*RIC 
+
+atipicos leves = 1,5 * RIC //entre 1.5*RIC (sin incluirlo) y 3*RIC estan los atipicos leves
+atipicos extermos = 3 * RIC //los extremos estan incluidos, si te pasas del extremo ya sos atipico extremo
+
+[Q1– 3*RIC ; Q1 – 1.5*RIC ) o (Q3 + 1.5*RIC ; Q3 + 3*RIC ]
+
+
+
+Normalizacion lineal uniforme lleva valores entre 0 o 1 (puede ser cualquier intervalo)
+le resta el minimo de la columna y divide por el rango. Le quita al atributo la unidad de medida de forma que si comparo 2 atributos distintos los puedo compara igualmente.
+Las normalizaciones tienen de objetivo quitarle al atributo la unidad de medida de forma que si comparo 2 columnas distintas tengo una representacion comun, esto es importante por que si un atributo esta en años tiene unidades entre 0 y 100 dinero entre miles y millones, que es chico y que es grande es dificil de cuantificar y no puedo comparar variables expresadas en unidades de medida distintas entonces expreso la variable en terminos del rango de la variable.
+La transformacion lineal tiene el problema de que desperdicia un monton del rango disponible para expresar los valores por que me ocupa lugar el valor fuera de rango.
+La normalizacion te habla de como es el valor repsecto al valor normal del atributo
+
+me permite expresar una variable en terminos de si misma es decir que puedo determinar si un valor es grande o chico para una variable basado en la propia columna
+La normalizacion de media y desvio hace lo propio pero expresa la variable en termino de cuanto se desvia de su valor medio por lo que permite facilmente identificar atipicos extremos asi como aprovechar mejor el rango de la variable, cosa que en la normlaizacion lineal no sucede ya que un valor atipico muy extremo me puede desconfigurar o influir en los valores de todas las variables.
+
+la normalizacion que resta la media y divide por desvio distribuye los datos entre 0 y 1. Es decir si hago transformacion con media y desvio y el atributo queda en 0 quiere decir que el atributo tiene el valor promedio, si tiene un valor de 1 2 o 3 quiere decir que esta hasta 3 veces por encima de la media, es una forma rapida de ver valores fuera de rango, valores encima de 2 y debajo de 2 te dan la pauta que son atipicos extremos
+
+valor_variable_normalizada_lineal = X-minimode(X) / maximode(X) - min(X)  <- es decir / rango
+valor_variable_normalizada_media  = X-media(X) / desvio(x)
+
+
+El combinador Lineal no sirve para hacer clasificacion pero si le cambiamos la funcion, hacemos que no sea la salida x*w sino que le ponemos una funcion, y en particular una sigmoide que es la que se utiliza, la neurona lineal resuelve rapidamente las cosas qeu hacia el perceptron en una opcion que va a ser derivable. La idea es usar una funcion sigmoide (regresion logistica) para aproximar la funcion a los datos. El combinador lineal busca reducir el error o diferencia que hay entre valor predicho y la salida esperada. Si yo en vez de tener un plano que pase por el medio que para hacer clasificacion no me sirve, lo cambio por una funcion que busque aproximar los valores y a un conjunto de los datos le doy valor 0 y a otro 1 con el fin de clasificarlos, el objetivo de utilizar la funcion de error que busque aproximar los valores de salida, puedo ubicar la funcion de forma tal que pueda decir los que estan por encima de x valor son tal cosa y por debajo son otra cosa, es decir consigo ubicar la funcion de una forma menos aleatoria no tan basada en los ejemplos sino tratando de ubicarla en funcion de una expresion de error. Cuando un modelo de regresion se convirtio en un elemento de clasificacion, cuando un elemento que aproximaba una salida continua se volivo a un elemento de clasificacion. Dado un conjunto de ejemplos podemos separar en 2 clases, los problemas son muy parecidos, sigue siendo una regresion por que intenta que la funcion de 0 o 1 para poder clasificar los ejemplos pero ya no es mas un plano que aproxima a todos los resultados, es una funcion que intentando reducir su error intenta apoyarse sobre los ejemplos.
+
+El combinador lineal no sirve para clasificar en 2 clases, lo que srive es para hacer una recta de regresion o aproximar una salida, osea da 1 valor continuo pero lo rescartable de esto es la minimizacion de la funcion de error, con esa idea incorporamos la idea del gradiente que es un campo escalar donde uno ubicado en cualquier posicion de la funcion peude determinar en que direccion la funcion crece, nos dice para que lado me tengo que mover si quiero encontrar una proxima ubicacion donde la fancion valga mas, es util pero tengo que saber como calcularlo. Planteamos la funcion de error que usaba todos los ejemplos y la direccion del gradiente para encontrar el minimo.
+
+neurona no lineal compite con el perceptron, el  perceptron tiene la ventaja de que cuando esta solo y la idea es reponsder por si o por no sobre los datos de entrenamiento el perceptron es perfecto. Sobre los datos de testeo el perceptron cuando la funcion discriminante no queda bien ubicada podria tener un mal desempeño. La neurona no lineal deberia ubicar aproximadamente siempre en la misma zona o ubicacion la funcion discriminante, entonces va a tener menos variacion en la taza de acierto sobre los datos que sean de testeo. Es interesante la comparacion para tener en cuenta que el tipo de problema que resuelven es el mismo y que el perceptorn lo hace por prueba y error hasta que ubica la recta y la neurona no lineal esta tratando de resolver el mismo problema minimizando una funcion de error que tiene forma sigmoide.
+

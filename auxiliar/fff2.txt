@@ -1,0 +1,220 @@
+EJEMPLO CON 4 CLASES Y 1 CAPA OCULTA.
+
+TENGO AL MENOS 2 DATOS DE ENTRADA (PARA PODER UBICAR EN ALGUN LADO YA SEA UN PLANO 2D LOS DATOS)
+Y 1 ARCO O ENTRADA EXTRA QUE ES EL BIAS
+
+DESPUES NECESITO 3 CORTES ES DECIR 3 NEURONAS EN LA CAPA OCULTA
+Y 1 ARCO QUE DENUEVO ES EL BIAS
+
+Y POR ULTIMO TENGO TANTAS SALIDAS COMO RESPUESTAS ESTOY ESPERANDO, ES DECIR 4 EN ESTE CASO
+
+Como se que son 3 corteS? yyy no lo se a priori, uno puede pensar que si quiero distinguir 4 cosas
+no puedo poner 1 recta, si pongo 2 tengo que tener la suerte de que las 4 partes que queden formadas (como si fuese una cruz o signo +) justo dividan a los ejemplos perfectamente, pero es mas probable que necesite 3 cortes y hasta 4, depende la suerte que tenga en el sentido de que tan dispersos o mejor dicho poco dispersos esten entre si los ejemplos de una misma clase
+
+despues vemos que es y como medir el desemepño de una red neuronal, pero en principio decimos que si vemos que tuvimos un buen desempeño con una cantidad de neuronas en la capa oculta podemos ir viendo de quitar capas a ver que pasa, si seguimos teniendo un buen desempeño, la idea e tener la arquitectura mas chica posible para que sea lo mas rapida que se pueda a la hora de clasificar, por que si pongo 80 neruonas en la capa oculta me va a clasificar todo hermoso pero voy a estar 6 horas computando, piensen que cada capa oculta cada neurona son pesos que hay que actualizar, no es moco de pavo
+
+
+LA IDEA DE ESTO ES HACER CORTES EN EL ESPACIO DE ENTRADA PARA IR TRANSFORMANDOLO, TRANSFORMAR EL ESPACIO DE ENTRADA DE FORMA QUE LAS CAPAS SUBSIGUIENTES TENGAN OTRO ESPACIO DE ENTRADA QUE SI PUEDAN CLASIFICAR (recordemos que si usamos esto y no un perceptron o nuerona no lineal es por que tenemos un problema que no es linealmente separable sea de mas de 2 clases o incluso de 2 como el caso del xor que tiene 2 e igual no es linealmente separable)
+
+
+Necesit un algoritmo que pueda aplicar el decenso de gradiente sobre toda la red, a medida que ve los ejemplos reiteradamente va cambiando los arcos dentro de toda la arquitectura.
+Entonces usaremos la regla delta que vimos con la neurona no lineal pero genralizada para todos los pesos de la arquitectura. Esot que decimos algortimo de back-propagation cambio el funcionamiento a las redes neuronales por que esto fue una gran traba que estuvo años sin resolverse hasta dar con esta arquitectura y este algoritmo.
+
+
+A esta arquitectura la llamamos Multiperceptron, aunque lo cierto es que ya las neuronas no son perceptrones por que el perceptron tenia una funcion umbral que es una funcion lineal y necesitamos funciones de activacion que sean derivables para poder calcular el gradiente.
+
+algoritmo backpropagation:
+
+tenemos los ejemplos:
+{(x1,y1),...,(xp,yp)} //xp es un vector e yp salida esperada ([15,54,76],1)
+para cada uno de los ejemplos conozco la respuesta y lo que aprendo es una funcion de correspondencia,
+la red neuronal aprendera para una entrada dada a determinar la salida esperada
+y para eso los ejemplos tienen que ser ejemplos de una funcion, es decir que no puede haber 2 entradas iguales
+que den salidas diferentes, es decir para un mismo vector de entrada la respesta esparada es unica, y para distintas variaciones de ese x deberia seguir respondiendo lo mismo, no puedo mostrarl eun gato y decirle que es un gato y despues mostrarle un gato y decirle que es un perro, no puede haber contradciccion entre lo que yo le informo como ejemplo y la respuesta esperada por que el comportamiento de esta red es aprender una funcion de correspondencia entra la entrada y la salida
+
+Entonces ponemos los ejemplos
+x°p = (x°p1,...,x°pn)
+Para cada ejemplo calculamos la entrada neta de cada neurona
+neta = SUMATORIA de i=1 a n de w*x°pi + bias
+aplicamos la funcion de activacion:
+i°p = f(neta°pj)
+osea calculamos la salida de cada una de las neuronas de la capa oculta
+calculamos la entrada neta de cada una de las neuronas de la capa de salida
+neta=SUMATORIA de j=1 a L(numero de capa o layer) de w°j*i°j+bias
+y finalmente calculamos la salida de la red, es decir propagamos todo hacia adelante
+
+entonces llegamos al final y aparecio el error, (obviamente por que los w inciiales son aleatorios osea que es imposibles que los pesos que me dio por default me clasifiquen bien xd)
+Es decir, aparecio la difrencia entre la respuesta esperada y la repsuesta obtenida (justamente a esta diferencia le decimos error, si fuese 0 es que clasifico bien y no hay error)
+
+error°pk = y°pk - o°pk
+
+y salida deseada 
+o salida obtenida
+p es el ejemplo y k se refiere a la capa
+
+Podemos calcular el error a la salida y minimizarlo, el error 
+1/2 * sumatoria de k=1 a M de (error°pk)^2
+
+
+CALCULO EL ERROR EN LA SALIDA, DESPUES EL ERROR EN LA CAPA Y DESPUES RECIEN ACTUALIZO LOS PESOS
+
+
+
+[[17  0  1  0  1]
+ [ 0 12  0  0  0]
+ [ 0  0 12  0  0]
+ [ 2  0  0 38  0]
+ [ 0  8  0  0 61]]
+
+a) En base a esta información, indique:
+
+▪ Cuántos ejemplos se utilizaron en el entrenamiento. -> 152 ejemplos (la suma de todos los numeros)
+
+▪ Cuántas clases puede reconocer este multiperceptrón. -> 5 clases (la cantida de columnas)
+
+▪ Cuál es la precisión (accuracy) de la red sobre el conjunto de ejemplos completo. ->  le erro a 12, sobre los 152 ejemplos es decir le erro a un 7,89% de los ejemplos o lo que es lo mimo acerto un 92,1%
+Entonces accuarcy es la suma de las diaognales sobre el total (la suma de todo)
+
+▪ Cuáles son los valores de precisión de la red al responder por cada uno de los valores de clase
+(precision). -> 92,1 es la precision de toda la red, se le llama accuracy, pero la preiciosn sobre cada clase se le dice precission y seria cuantos valores estan sobre la diagonal dividio la suma de la columna (17/19 = 0.89 para la clase 1)
+este 17/19 se innterpreta asi, la columna es las veces que dijo 1, de esas 19 veces (17 + 2 que dijo 4), 17 veces le pego al 0 es decir que su precision fue 17/19 osea veces que era 0 realmente sobre veces que dijo que era 0. 
+siguiendo con esto:
+1: 17/19 = 89%
+2: 12/20 = 60%
+3: 12/13 = 92%
+4: 38/38 = 100%
+5: 61/62 = 98%
+
+▪ Cuáles son los valores de sensibilidad de la red al responder por cada uno de los valores de clase
+(recall) -> el recall es lo que pasa por fila, osea por ejemplo la clase 3 tiene una precision del 92% por que lcasifico a un 1 como un 3 pero a los que eran 3 los clasifico a todos bien osea que tiene un recall de 1 o 100%, lo mismo la clase 2.
+entonces siguiendo con el ejemplo:
+1: 17/19 = 89%
+2: 12/12 = 100%
+3: 12/12 = 100%
+4: 38/40 = 95%
+5: 61/69 = 88%
+
+
+
+b) Identifique la clase con el mejor valor de F1-score.
+Yo lo que quiero es que mi rn tenga la maxima precision y maxio recall posible.
+El f1 score combina las 2 metricas, y es asi: 
+2* ( precision * recall ) / ( precision + recall )
+es una expresion que combina precision y recall para integrar ambas cosas que te va a dar mas cuando crezca en ambos. F1 score es la MEDIA ARMONICA
+
+
+2- semillas.csv
+
+a) Con respecto a la arquitectura, indique:
+
+▪ La cantidad de neuronas de la capa de entrada. 8 de entardas + 1 bias = 9
+
+▪ La cantidad de neuronas de la capa de salida. 3 de salida pues son 3 clases
+
+▪ La cantidad de pesos (arcos) que tiene la red si se utiliza una única
+capa oculta formada por 4 neuronas
+
+a ver, son 8 neuronas de entrada + 1 bias, conectadas 4 neuronas
+que a su vez estan conectadas 3 neuronas de salida + 1 bias,
+tenemos entonces 9*4 + 5 * 3 = 51 arcos
+
+
+
+Que es una epoca? en vez deingresar los ejemplso de a 1 los ingreso por bloques, eso quiere decir que voy a hacer pasar  por la red una cierta cantidad de ejmplos con los mismos valores de w. Suponete que tenog 2000 ejemplos y los divido en bloques o lotes de 200 ejemplos cada uno (Es decir 10 lotes), entonces voy a hacer pasar 200 ejemplos con los mismos w, voy a medir el error en esos 200 y entonces voy a modificar los valores de w. La cantidad de cuentas que tenngo que hacer es muy parecida por que tengo que corregir menos veces el valor de w, pero el calculo de la derivada tiene cada vez mas termions, pasa que este producto de matrices o vectores es muy eficiente en los lenguaje de programacion entonces el proceso es rapido, pero lo de la derivada tampoco es que es gratis por que tengo muchos mas terminos que sumar, entonces la funcion de costo ahora no va a ser el ECM o la que sea, ahora va a ser la suma del error de los ejemplos que pasaron del lote.
+
+ejemplos:
+Se entrenó un multiperceptrón durante 200 épocas y cada época estuvo formada por 50 iteraciones, ¿cuántas veces se ingresó cada ejemplo a la red hasta completar el entrenamiento?
+Cada ejemplo se ingresó 200 veces. Las iteraciones dentro de una época determinan cuántas actualizaciones de los pesos se realizaron, pero el ejemplo esta dentro de un bloque que ingreso a la red 200 veces, 1 por epoca.
+
+Se entrenó un multiperceptrón durante 200 épocas y cada época estuvo formada por 50 iteraciones, ¿cuántas veces se actualizaron los pesos de toda la red?
+Los pesos se actualizan en cada iteración, es decir, luego de introducir un bloque de ejemplos. Hay 50 iteraciones por época. Luego se actualizan 50*200=10000 veces.
+
+
+7) (1 pto) Se dispone de 3000 ejemplos para entrenar un multiperceptrón y se debe decidir entre utilizar o
+no utilizar lotes de tamaño 120.
+a) Explique qué diferencia hay entre estas dos opciones.
+b) Si se utilizan lotes de tamaño 120 y se sabe que el conjunto completo de ejemplos fue ingresado al
+multiperceptrón 250 veces hasta alcanzar la cota de error esperada,
+i. ¿cuántas iteraciones y cuántas épocas se realizaron?
+ii. ¿cuántas veces se actualizaron los pesos de la red?
+iii. ¿cuántas veces se habrían actualizado los pesos de la red si no se hubieran utilizado lotes?
+
+i- 3000/120 = 25 iteraciones, es decir que se acutalizan los pesos 25 veces en cada epoca, que si cada ejemplo entro 250 veces es por que hay 250 epocas.
+ii-250 * 25 = 6250 veces se actualizaron los pesos
+iii-sino se hubieran utilizado lotes los pesos se actualizarian luego de ingresado cada ejemplo, es ecir 3000 * cantidad maxima de iteraciones en el peor caso o una cantidad de iteraciones menor al maximo si se logro que el error sea menor a la cota.
+
+
+
+
+Una funcion de costo es mayor a 0 y tiende a 0
+
+####################################################
+
+
+6) (1 pto) Función de costo de una neurona. Entropía cruzada binaria:
+a) ¿Qué características debe tener una función para considerarse una función de costo?
+b) ¿Qué ventaja tiene utilizar la función Entropía Cruzada Binaria en lugar del Error Cuadrático Medio
+para entrenar una neurona no lineal con función sigmoide entre 0 y 1? Explique.
+c) ¿Podría utilizarse la función Entropía Cruzada Binaria como función de costo para un perceptrón?
+Explique
+
+a-
+una funcion para ser considerada funcion de coste debe poder ser derivable para poder aplicar el descenso de gradiente.
+
+b-
+La entropia cruzada binaria posee dos características deseables para el proceso de entrenamiento:
+Contiene un único mínimo, lo cual la hace ideal para su optimización usando el descenso de gradiente.
+La entropía cruzada penaliza significativamente al modelo cuando comete errores, lo que a su vez también mejora el proceso de entrenamiento.
+
+c-
+no se puede utilizar para un perceptron pues el perceptron cuenta con una funcion umbral que no es derivable por lo que no podemos utilizar el descenso de gradiente
+####################################################
+
+
+Diferencia entre perceptron combinador lineal y neurona no lineal:
+
+el perceptron y la neurona no lineal resuelven problemas de clasificacion linealmente separables (luego combinando neuronas no lineales podemos resolver problemas que no son linealmente separables como el XOR). El combinador lineal sirve para resolver problemas de regresion lineal y nos sirve para predecir valores basado en el aprendizaje que obtuvo mediante la minimizacion de la funcion una funcion de costo (Error cuadratico medio) utilizando el descenso de gradiente.
+El perceptron utiliza una funcion umbral que clasifica a los ejemplos en en funcion de si son mayores a 0 o menores que 0 y va tironeando una recta hasta ubicarla en una posicion que clasifique correctamente los ejemplos de ser posible (de no ser posible se habran acabado las iteraciones).
+Por su parte la neurona no lineal al igual que el perceptron resuelve problemas de clasificacion pero aplicando una funcion generalmente sigmoide a la salida neta del combinador lineal, de forma tal que los ejemplos queden "apoyados" sobre el el techo y el piso de la funcion y de esa forma clasificarlos. Se utiliza una funcion sigmoide pues esta es derivable y podemos utilizar el descenso de gradiente para minimizar el error cometido en cada iteracion.
+
+
+
+
+Para evitar el sobreajuste puedo utilizar la tecnica de early stopping o parada temprana: es decir, a la par que trabajo con los daots de entrenamiento puedo ir vinedo como me va con los datos de testeo, entonces va a ocurrir que sobre los datos de entrenamiento siempre siga mejorando pero sobre los datos de testeo en algun momento empiezen a empeorar, com oque me estoy ajustando demasiado a los datos de entrenamiento y estoy perdiendo de vista la generalidad del problema. No siempre es una buena solucion, es ingenua por que aveces cuando la red neuronal es muy compleja ocurre que empieza a emeperorar sobre el testeo para despues volver a mejorar otra vez. Despues vemos como dividimos los datos en entrenamiento y testeo...
+
+*entonces como mejorar el sobreajuste: incrementar la cantidad de datos al entrenamiento, es decir mostrarle mas opcoines para que no quede tan restringido a una solucion puntual.
+*Lo otro que puede hacer es quitarle complejidad, es decir quitarle capas o neuronas, achicar la cantidad de pesos o arcos o parametros del modelo para hacerlo mas simple, aunque pierde precision. 
+Sin llegar a esto puedo usar tecnicas de regularizacion:
+
+REGULARIZACION L2  } tienen como objetivo mantener
+REGULARIZACION L1  } los pesos pequeños
+droopout
+
+REGULARIZACION L2 y L1:
+Como hago para que los pesos de la red no sean grandes? por que cuando pasa esto lo que sucede es que la red comienza a "especializarse" en alguna forma que tienen los ejemplos de entrenamiento y entonces caigo en el sobreajuste. La manera de hacer que los valroes de los w no sean demasiado gradnes es agregarlos a la funcion de costo, entonces si la funcion de costo era el ECM, entonces le agrego algo que es porporcional a la suma de todos los pesos. El L2 los pesos lo suma al cuadrado, el L1 en valor absoluto.
+
+DROPOUT:
+no se modifica la funcion de costo sino la arquitectura de la red.
+Para esto se entrena parte de la arquitectura a la vez. Primero elige al azar neuronas que no van a considerar ("borra temporalmente") en la proxima iteracion, es decir no son tenidas en cuenta. Actualiza los pesos del mini lote si corresponde y las que se borraron no intervienen, entonces despues restituyo las neuronas que no habia considerado y vuevlo aleaotriamente a seleccion otras neuronas a no tener en cuenta. Es decir no todas las veces TODOS los pesos son modificados, con esto lo que hago es "no permitirles" a estas neuronas ocultas especializarse en una respuesta, es decir ser expertas en clasificar correctamente una de las clases.
+Repitiendo esta metodologia reiteradamente consigo que la red se adapte sin sobreajustar.
+
+
+RESPECTO AL ESTANCAMIENTO EN UN MINIMO LOCAL, que sucede con la funcion de error, un termino que usamos generalmente es el termion de "momento".
+Este termino de momento lo que hace es impulsar, o hacer que el peso se siga modificando en la misma direccion en la que venia modificandose, por que a la modificacion que uno habitualmente le hace al gradiente, se le suma un pedacito de la ultima modificacion realizada, por que nosotros la velocidad de aprendizaje la manejamos ocn el alfa, el gradiente lo que hace es impulsa la modificacion del vector de pesos en una direccion, el modulo del gradiente tambien incide a darle mayor velocidad y el temrion de "momento" lo que hace es no verse tan influenciado por el gradiente sino continuar en la misma direccion en la que se venia modificando el gradiente. Esto en que me ayuda? en 2 situaciones... cuando el vector gradiente tiene un modulo demasiado grande funciona como una retencion de la ubicacion en la que estaba y cuando el vector gradiente se va acercando a una zona en la que ya no tiene pendiente esto que agrego sirve como un impulso para ver si salimos del estancamiento, si estamos en un optimo local y necesito un impulso para ver si puedo seguir caminando, este factor momento me ayuda a continuar en la misma lineal en la que venia.
+
+
+
+
+
+
+CURVA ROC: SIRVE PARA COMPARAR MATRICES DE CONFUSION DE FORMA DE PODER COMPARAR 2 MODELOS DE CLASIFICACION BINARIA (de 2 clases). Nos dice la confianza que tiene el metodo para producir una respuesta.
+
+MATRIZ DE CONFUSION
+VP: VERDADEROS POSITIVOS
+FP: FALSOS POSITIVOS
+
+6 0
+6 8
+TASA VP= 6/12 (VP / SUMA COLUMNA)
+TASA FP= 0/8 (FP / SUMA COLUMNA)
+

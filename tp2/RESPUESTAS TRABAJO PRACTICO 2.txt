@@ -1,0 +1,32 @@
+
+1-
+
+a-
+que no tienen tantan correlacion como para predecir envio en funcion de esos 2 atributos
+
+b-
+w(UNIDADES) = 0.484; w(DESCUENTO) = 0.06; b = -0.161
+41*0.484 + 0*0.06 - 0.161 = 19,683 -> respuesta del perceptron
+
+c-
+la i y la iii dejan los ejemplos bien ubicados
+
+
+
+
+2-
+b-
+
+promedio de 5 ejecuciones: w0= 429,432   y   w1= -76,018
+			   b= 0,334
+
+perimetro* 429,432 + area* -76,018 + 0,334
+
+c-
+770 * 429,432 + 5000 * -76,018 + 0,334 = -49427.026
+
+
+
+ejer 3
+
+

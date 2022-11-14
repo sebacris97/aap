@@ -1,0 +1,139 @@
+1111111111 discreto
+1111111 continuo
+11111111 nominal
+11 ordinal
+
+podemos predecir si es un 2 puertas o un 4 puertas tenienndo en cuenta el largo
+
+el diagrama de cajas me permite visualizar en que rango numerico se ubican los cuartiles de la tabla ademas de poder visualizar los atipitocs leves y atipicos extremos, y me muestra la dispersion de los atributos de la tabla, de donde a donde van.
+
+el diagrama de dispersion me permite ver como estan distribuidos los valores en 2 dimensiones, y nos da una idea de como estan distribuidos, nos permite ver la relacoin entre atributos y ver el imapacto que tienen los datos sobre el modelo que tiene que ver con la correlacion lineal. NOS PERMITE VER UNA CORRELACION LINEAL ENTRE VARIABLES. por que me inteersa saber si hay una correlacion lineal entre variables? por que si la tengo es probebalbe que pueda quitar alguno de ellos y reducir la cantidad de atributos o valores que ingresan al modelo. COEFICINETE DE CORRELACION LINEAL necesita caclular media y desvio por lo que se aplica sobre atributos numericos.
+
+el diagrama de barras sirve para fer la frecuencia, cuantificar, es decir es mas util para atributos nominales, lo mismo el diagrama de torta
+
+para atributos numericos podemos hacer un histograma que es muy similar al de caja pero relaciona 2 variables numnericas. Para dibujarlo tengo que decirle en cuantas barras o en cuantos intervalos quiero cortar el rango al cual pertenecen los valores de las variables. Sirve para ver la frecuencia del que mas aparece de algo. se ve facil el valor de la media, del desvio, el maxixmo minimo y rango, es muy similar al diagrama de caja.
+
+
+
+Dibujar un rectángulo con Q1 y Q3 como extremos e indicar la posición de la
+mediana (Q2) mediante una línea.
+• Para dibujar los bigotes, las líneas que se extienden desde la caja, hay que
+calcular los límites superior e inferior, LI y LS, que identifiquen a los valores
+atípicos.
+Para ello se calcula cuándo se consideran atípicos los valores. Son aquellos
+inferiores a Q1-1.5 x RIC o superiores a Q3+1.5 x RIC.
+En el ejemplo:
+• inferior: 7 - (1.5 x 2) = 4
+• superior: 9 + (1.5 x 2) = 12
+Ahora se buscan los últimos valores que NO son atípicos, que serán los
+extremos de los bigotes.
+• En el ejemplo: 5 y 10
+• Marcar como atípicos todos los datos que están fuera del intervalo (LI, LS).
+En el ejemplo: 0.5 y 3.5
+
+ej4:
+Q1 69
+Q2 o MEDIANA 88
+Q3 114	
+MAX 200
+MIN 48
+bigote inferior 48  ()
+bigote superior 176 ()
+RIC = 45
+atipicos leves = 1,5 * RIC =1,5*45 = 67,5
+atipicos extermos 3 * RIC = =3*45 = 135
+lim inf = q1 - atipicos leves = 69 + 67,5 = 136,5
+lim sup = q3 + atipicos leves = 114 + 67,5 = 181,5
+
+
+ej5:
+
+Medida			diesel   | gas
+mediana			13852.5  | 9989
+Mínimo			7099     | 5118 
+Máximo			45400    | 31600
+Q1			9120     | 7609
+Q2			13852.5  | 9989
+Q3			19375.5  | 15985
+RIC			10255.5  | 8376
+Bigote Inferior		7900     | -4955
+Bigote Superior		31600    | 28549
+atipicos leves                   | (28549 ; 41113]
+atipicos extremos		 | (41113; infinito]
+
+
+falso
+falso
+falso -> me marca el rango de precios y los valores atipicos, no la frecuencia con la que aparece un gas o un diesel
+falso -> todos los atipicos estan encima del rango
+
+
+6-
+INTERPRETACION (abs ES VALOR ABSOLUTO)
+ Si 0.5≤ abs(Corr(A,B)) < 0.8 se dice que A y B tienen una
+correlación lineal débil.
+ Si abs(Corr(A,B)) ≥ 0.8 se dice que A y B tienen una correlación
+lineal fuerte
+ Si abs(Corr(A,B))<0.5 se dice que A y B no están correlacionados
+linealmente. Esto NO implica que son independientes, sólo que entre
+ambos no hay una correlación lineal.
+
+curv  highway
+-0,79 -0,79
+debil debil
+negativo negativo
+el significado de correlacion obtenido nos indica que ambas varialbes no tienen relacion entre si, es decir no estan condicionadas una con otra
+
+que la covarianza valga 0 no quiere decir que las variables sean independientes, sino que no estaria ocurriendo una progresion lineal dentro de los valores
+
+a- F
+b- V
+c- F
+d- F que no esten relacionados linealmente no implica que sean independientes entre si
+e- V una variable siempre esta linealmente relacionada a si misma
+f- F se toma el valor absoluto
+g- F
+
+
+
+8-
+		 |     chico        |      grande
+-----------------|------------------|------------------
+intervalos       | (60.735 , 193.5] | (19.,5 , 326.0]	    
+cantidad valores |      191         |       14
+
+se dividio el rango de la variable en partes iguales
+
+
+
+
+10-
+
+c- 
+podemos predecir si es de lujo o esdtandar basado en la malta y podemos decir que hay una relacion entre el precio y la cantidad de malta (viendo la matriz de correlacion)
+d-
+rellené 2 valores y utilice el precio medio (no el mediano) de los whiskys de la misma categoria
+
+e-
+i- V
+ii- V
+iii- F -> el bigote inferior esta marcado por Q1-(1,5*RIC) = 73-(1.5*(94-73)) = 41,5 
+iv- V -> entre
+
+f- moda 87
+
+g-
+
+		Precio	Malta	Añejamiento	Calidad
+Precio		1	0.71	0.54		0.30	
+Malta		0.71	1	0.39		0.26
+Añejamiento	0.54	0.39	1		0.27
+Calidad		0.30	0.26	0.27		1
+
+i-	V
+ii-	F
+iii-	V -> añejamiento con precio y malta con precio
+iv-	V
+
+
+
